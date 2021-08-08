@@ -1,6 +1,6 @@
 var contexto = document.getElementById("lienzoJuego").getContext("2d")
 contexto.canvas.width = 300
-contexto.canvas.height = 700
+contexto.canvas.height = 530
 var FPS = 60
 var gravedad = 1.5
 
@@ -11,18 +11,46 @@ var personaje = {
     h:50
 }
 
-//CONTROL
+// VARIABLES IMAGENES
+
+var bird = new Image()
+bird.src = "imagenes/bird.png"
+
+var background = new Image()
+background.src = "imagenes/background.png"
+
+var suelo = new Image()
+suelo.src = "imagenes/suelo.png"
+
+var tuberiaNorte = new Image()
+tuberiaNorte.src = "imagenes/tuberiaNorte.png"
+
+var tuberiaSur = new Image()
+tuberiaSur.src = "imagenes/tuberiaSur.png"
+
+//CONTROL CON TECLA
 
 function presionar(){
     personaje.y -=25
 }
 
 
+//BUCLE //
 setInterval(loop,1000/FPS)
 function loop(){
-    contexto.clearRect(0,0,300,700)
-    contexto.fillStyle = "rgba(100,0,0,1)"
-    contexto.fillRect(personaje.x,personaje.y,personaje.w,personaje.h)
+    contexto.clearRect(0,0,300,530)
+
+    //FONDO
+    contexto.drawImage(background,0,0)
+
+    //SUELO
+    contexto.drawImage(suelo,0,contexto.canvas.height - suelo.height)
+
+    //PERSONAJE    
+    contexto.drawImage(bird,personaje.x,personaje.y)
+
+
+    //TUBERIAS
 
     personaje.y += gravedad
 } 
