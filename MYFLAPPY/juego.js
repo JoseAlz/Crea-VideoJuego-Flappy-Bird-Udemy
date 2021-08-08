@@ -19,6 +19,12 @@ tuberias[0] = {
     x:contexto.canvas.width,
     y:0
 }
+
+//VARIABLES AUDIOS
+
+var punto = new Audio()
+punto.src = "audios/punto.mp3"
+
 // VARIABLES IMAGENES
 
 var bird = new Image()
@@ -39,7 +45,7 @@ tuberiaSur.src = "imagenes/tuberiaSur.png"
 //CONTROL CON TECLA
 
 function presionar(){
-    personaje.y -=25
+    personaje.y -=20
 }
 
 
@@ -65,6 +71,10 @@ function loop(){
         contexto.drawImage(tuberiaSur,tuberias[i].x,tuberias[i].y + constante)
         tuberias[i].x--
 
+        if(tuberias[i].y + tuberiaNorte.height < 80){
+            tuberias[i].y = 0
+        }
+
         if(tuberias[i].x == 150){
             tuberias.push({
                 x:contexto.canvas.width,
@@ -79,6 +89,11 @@ function loop(){
                 || personaje.y + bird.height >= contexto.canvas.height - suelo.height){
             location.reload()
         }
+        if(tuberias[i].x == personaje.x){
+            score++
+            punto.play()
+        }
+
     }
 
     //CONDICIONES
