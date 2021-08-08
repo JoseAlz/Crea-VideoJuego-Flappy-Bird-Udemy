@@ -1,6 +1,11 @@
-var contexto = document.getElementById("lienzoJuego").getContext("2d")
-contexto.canvas.width = 300
-contexto.canvas.height = 530
+var contexto = document.getElementById("lienzoJuego")
+var ctx = contexto.getContext("2d")
+var WIDTH = 300;
+var HEIGHT = 530;
+var CANVAS_WIDTH = 300;
+var CANVAS_HEIGHT = 530;
+contexto.width = WIDTH;
+contexto.height = HEIGHT;
 
 //VARIABLES
 
@@ -16,7 +21,7 @@ var personaje = {
 }
 var tuberias = new Array
 tuberias[0] = {
-    x:contexto.canvas.width,
+    x:contexto.width,
     y:0
 }
 
@@ -45,30 +50,41 @@ tuberiaSur.src = "imagenes/tuberiaSur.png"
 //CONTROL CON TECLA
 
 function presionar(){
-    personaje.y -=20
+    personaje.y -=25
+}
+resize()
+function resize(){
+    CANVAS_HEIGHT = window.innerHeight;
+    CANVAS_WIDTH = window.innerWidth;
+
+    contexto.width = WIDTH;
+    contexto.height = HEIGHT;
+
+    contexto.style.height = ""+ CANVAS_HEIGHT +"px";
+    //contexto.style.height = ""+ CANVAS_WIDTH +"px";
 }
 
 
 //BUCLE //
 setInterval(loop,1000/FPS)
 function loop(){
-    contexto.clearRect(0,0,300,530)
+    ctx.clearRect(0,0,300,530)
 
     //FONDO
-    contexto.drawImage(background,0,0)
+    ctx.drawImage(background,0,0)
 
     //SUELO
-    contexto.drawImage(suelo,0,contexto.canvas.height - suelo.height)
+    ctx.drawImage(suelo,0,contexto.height - suelo.height)
 
     //PERSONAJE    
-    contexto.drawImage(bird,personaje.x,personaje.y)
+    ctx.drawImage(bird,personaje.x,personaje.y)
 
 
     //TUBERIAS
     for(var i= 0; i < tuberias.length ; i++){
         var constante = tuberiaNorte.height + 80
-        contexto.drawImage(tuberiaNorte,tuberias[i].x,tuberias[i].y)
-        contexto.drawImage(tuberiaSur,tuberias[i].x,tuberias[i].y + constante)
+        ctx.drawImage(tuberiaNorte,tuberias[i].x,tuberias[i].y)
+        ctx.drawImage(tuberiaSur,tuberias[i].x,tuberias[i].y + constante)
         tuberias[i].x--
 
         if(tuberias[i].y + tuberiaNorte.height < 80){
@@ -77,7 +93,7 @@ function loop(){
 
         if(tuberias[i].x == 150){
             tuberias.push({
-                x:contexto.canvas.width,
+                x:contexto.width,
                 y: Math.floor(Math.random()*tuberiaNorte.height) - tuberiaNorte.height
             })
         }
@@ -86,7 +102,7 @@ function loop(){
             personaje.x <= tuberias[i].x + tuberiaNorte.width &&
             (personaje.y <= tuberias[i].y + tuberiaNorte.height ||
                 personaje.y + bird.height >= tuberias[i].y + constante) 
-                || personaje.y + bird.height >= contexto.canvas.height - suelo.height){
+                || personaje.y + bird.height >= contexto.height - suelo.height){
             location.reload()
         }
         if(tuberias[i].x == personaje.x){
@@ -98,10 +114,12 @@ function loop(){
 
     //CONDICIONES
     personaje.y += gravedad
-    contexto.fillStyle = "rgba(0,0,0,1)"
-    contexto.font = "25px Arial"
-    contexto.fillText("Score: "+score,10,contexto.canvas.height-40)
+    ctx.fillStyle = "rgba(0,0,0,1)"
+    ctx.font = "25px Arial"
+    ctx.fillText("Score: "+score,10,contexto.height-40)
 } 
 
 //EVENTOS
+
+window.addEventListener("resize",resize)
 window.addEventListener("keydown",presionar)
