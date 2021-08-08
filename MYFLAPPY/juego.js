@@ -63,6 +63,13 @@ function loop(){
         contexto.drawImage(tuberiaNorte,tuberias[i].x,tuberias[i].y)
         contexto.drawImage(tuberiaSur,tuberias[i].x,tuberias[i].y + constante)
         tuberias[i].x--
+
+        if(tuberias[i].x == 150){
+            tuberias.push({
+                x:contexto.canvas.width,
+                y: Math.floor(Math.random()*tuberiaNorte.height) - tuberiaNorte.height
+            })
+        }
     }
 
     //CONDICIONES
