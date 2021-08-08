@@ -50,7 +50,7 @@ tuberiaSur.src = "imagenes/tuberiaSur.png"
 //CONTROL CON TECLA
 
 function presionar(){
-    personaje.y -=25
+    personaje.y -= 30 //ESCALADA DEL PJ
 }
 resize()
 function resize(){
@@ -91,7 +91,7 @@ function loop(){
             tuberias[i].y = 0
         }
 
-        if(tuberias[i].x == 150){
+        if(tuberias[i].x == 120){ //DISTANCIA ENTRE TUBERIAS
             tuberias.push({
                 x:contexto.width,
                 y: Math.floor(Math.random()*tuberiaNorte.height) - tuberiaNorte.height
